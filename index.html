@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>🥳🥳</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
@@ -50,6 +51,7 @@
       font-size: 5rem;
       font-family: 'Lobster', cursive;
       color: #ffbaea;
+      color: 
       text-shadow: 2px 2px 4px rgb(0, 0, 0);
       animation: pulse 2s infinite;
       text-align: center;
@@ -267,41 +269,82 @@
       }
 
 
-    setInterval(createConfetti, 250);
-
-    // Music control
-    const musicControl = document.createElement('div');
-    musicControl.classList.add('music-control');
-    musicControl.innerHTML = `
-      <svg class="music-icon" viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
-      </svg>
-    `;
-    musicControl.onclick = () => {
-      const music = document.getElementById('birthday-music');
-      if (music.paused) {
-        music.play();
-      } else {
-        music.pause();
-      }
-    };
-    document.body.appendChild(musicControl);
-
-    // Play music when user clicks on music control button
-    musicControl.addEventListener('click', () => {
-      const music = document.getElementById('birthday-music');
-      music.play();
-    });
+    setInterval(createConfetti, 100);
 
     // Wait for audio to load before displaying the page
       const audio = document.getElementById('birthday-music');
       audio.load();
       audio.addEventListener('canplaythrough', () => {
         const loader = document.querySelector('.loader');
-        loader.style.display = 'none';
-        loader.addEventListener('transitionend', () => {
-          audio.play();
+
+        // Create a popup to ask the user to play with or without music
+        const popup = document.createElement('div');
+        popup.style.position = 'fixed';
+        popup.style.top = '50%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.backgroundColor = 'white';
+        popup.style.padding = '20px';
+        popup.style.borderRadius = '10px';
+        popup.style.boxShadow = '0 0 10px rgba(0, 0, 0)';
+        popup.style.zIndex = '1000';
+        popup.style.display = 'flex';
+        popup.style.flexDirection = 'column';
+        popup.style.alignItems = 'center';
+
+        const popupText = document.createElement('p');
+        popupText.textContent = 'Do you want to play the music?';
+        popup.appendChild(popupText);
+
+        const buttonsContainer = document.createElement('div');
+        popup.appendChild(buttonsContainer);
+
+        const yesButton = document.createElement('button');
+        yesButton.textContent = 'Yes';
+        yesButton.style.padding = '10px 30px';
+        yesButton.style.marginLeft = '5px';
+        yesButton.style.marginRight = '5px';
+        yesButton.style.backgroundColor = 'green';
+        yesButton.style.color = 'white';
+        yesButton.style.border = 'none';
+        yesButton.style.borderRadius = '10px';
+        yesButton.addEventListener('click', () => {
+          // Play audio on click of h1, cake, or body
+          const h1 = document.querySelector('h1');
+          const cake = document.querySelector('.cake');
+
+          const playAudio = () => {
+            audio.play();
+            h1.removeEventListener('click', playAudio);
+            cake.removeEventListener('click', playAudio);
+            document.body.removeEventListener('click', playAudio);
+          };
+
+          h1.addEventListener('click', playAudio);
+          cake.addEventListener('click', playAudio);
+          document.body.addEventListener('click', playAudio);
+
+          loader.style.display = 'none';
+          popup.remove();
         });
+        buttonsContainer.appendChild(yesButton);
+
+        const noButton = document.createElement('button');
+        noButton.textContent = 'No';
+        noButton.style.padding = '10px 30px';
+        noButton.style.backgroundColor = 'red';
+        noButton.style.color = 'white';
+        noButton.style.marginLeft = '5px';
+        noButton.style.marginRight = '5px';
+        noButton.style.border = 'none';
+        noButton.style.borderRadius = '10px';
+        noButton.addEventListener('click', () => {
+          loader.style.display = 'none';
+          popup.remove();
+        });
+        buttonsContainer.appendChild(noButton);
+
+        document.body.appendChild(popup);
       });
 
   </script>

@@ -37,6 +37,7 @@
     }
 
     .popup {
+      background-color: #fcdaf1;
       @media (max-width:500px) {
         min-width: 60dvw;
       }
@@ -59,6 +60,12 @@
       color: #ffbaea;
       text-shadow: 2px 2px 4px rgb(0, 0, 0);
       animation: pulse 2s infinite;
+      text-align: center;
+    }
+
+    h2, .popup-button {
+      font-family: 'Lobster';
+      /* color: #eeacd0; */
       text-align: center;
     }
 
@@ -285,11 +292,10 @@
         // Create a popup to ask the user to play with or without music
         const popup = document.createElement('div');
         popup.classList.add('popup');
-        popup.style.position = 'fixed';
+        popup.style.position = 'absolute';
         popup.style.top = '50%';
         popup.style.left = '50%';
         popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.backgroundColor = '#ffd8f3';
         popup.style.padding = '20px';
         popup.style.borderRadius = '10px';
         popup.style.boxShadow = '0 0 10px rgba(0, 0, 0)';
@@ -298,7 +304,7 @@
         popup.style.flexDirection = 'column';
         popup.style.alignItems = 'center';
 
-        const popupText = document.createElement('p');
+        const popupText = document.createElement('h2');
         popupText.classList.add('popup-text');
         popupText.textContent = 'Proceed with a music?';
         popup.appendChild(popupText);
